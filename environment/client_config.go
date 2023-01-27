@@ -45,9 +45,9 @@ func (c *ClientConfig) InitFlags(fs *flag.FlagSet) {
 	fs.StringVar(&c.Kubeconfig, "kubeconfig", os.Getenv("KUBECONFIG"),
 		"Path to a kubeconfig. Only required if out-of-cluster.")
 
-	fs.IntVar(&c.Burst, "kube-api-burst", 0, "Maximum burst for throttle.")
+	fs.IntVar(&c.Burst, "kube-api-burst", 50000, "Maximum burst for throttle.")
 
-	fs.Float64Var(&c.QPS, "kube-api-qps", 0, "Maximum QPS to the server from the client.")
+	fs.Float64Var(&c.QPS, "kube-api-qps", 100000, "Maximum QPS to the server from the client.")
 }
 
 func (c *ClientConfig) GetRESTConfig() (*rest.Config, error) {
@@ -79,8 +79,8 @@ func (c *ClientConfig) GetRESTConfig() (*rest.Config, error) {
 		return nil, fmt.Errorf("failed to create client config: %w", err)
 	}
 
-	config.QPS = float32(c.QPS)
-	config.Burst = c.Burst
+	config.QPS = 50000
+	config.Burst = 100000
 
 	return config, nil
 }

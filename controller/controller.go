@@ -60,7 +60,7 @@ var (
 	// may adjust this process-wide default.  For finer control, invoke
 	// Run on the controller directly.
 	// TODO rename the const to Concurrency and deprecated this
-	DefaultThreadsPerController = 2
+	DefaultThreadsPerController = 10
 )
 
 // Reconciler is the interface that controller implementations are expected
@@ -243,9 +243,9 @@ func NewContext(ctx context.Context, r Reconciler, options ControllerOptions) *I
 	if options.Reporter == nil {
 		options.Reporter = MustNewStatsReporter(options.WorkQueueName, options.Logger)
 	}
-	if options.Concurrency == 0 {
-		options.Concurrency = DefaultThreadsPerController
-	}
+
+	options.Concurrency = DefaultThreadsPerController
+
 	i := &Impl{
 		Name:          options.WorkQueueName,
 		Reconciler:    r,

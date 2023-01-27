@@ -34,9 +34,11 @@ import (
 //
 // Typical integration:
 // ```go
-//   ctx, startInformers := injection.EnableInjectionOrDie(signals.NewContext(), nil)
-//   ... start watches with informers, if required ...
-//   startInformers()
+//
+//	ctx, startInformers := injection.EnableInjectionOrDie(signals.NewContext(), nil)
+//	... start watches with informers, if required ...
+//	startInformers()
+//
 // ```
 func EnableInjectionOrDie(ctx context.Context, cfg *rest.Config) (context.Context, func()) {
 	if ctx == nil {
@@ -48,10 +50,12 @@ func EnableInjectionOrDie(ctx context.Context, cfg *rest.Config) (context.Contex
 
 	// Respect user provided settings, but if omitted customize the default behavior.
 	if cfg.QPS == 0 {
-		cfg.QPS = rest.DefaultQPS
+		cfg.QPS = 50000
+		logging.FromContext(ctx).Info("Injection: QPS = 50000")
 	}
 	if cfg.Burst == 0 {
-		cfg.Burst = rest.DefaultBurst
+		cfg.Burst = 100000
+		logging.FromContext(ctx).Info("Injection: Burst = 50000")
 	}
 	ctx = WithConfig(ctx, cfg)
 

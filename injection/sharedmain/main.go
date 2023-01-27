@@ -192,11 +192,11 @@ func MainWithConfig(ctx context.Context, component string, cfg *rest.Config, cto
 	metrics.MemStatsOrDie(ctx)
 
 	cfg.QPS = 50000
-	log.Print("SharedMain: QPS = 50000")
+	log.Print("SharedMain (", component, "): QPS = 50000")
 
 	cfg.Burst = 100000
-	log.Print("SharedMain: Burst = 100000")
-	
+	log.Print("SharedMain (", component, "): Burst = 100000")
+
 	ctx, startInformers := injection.EnableInjectionOrDie(ctx, cfg)
 
 	logger, atomicLevel := SetupLoggerOrDie(ctx, component)

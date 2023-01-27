@@ -235,10 +235,10 @@ func MainWithConfig(ctx context.Context, component string, cfg *rest.Config, cto
 	// Respect user provided settings, but if omitted customize the default behavior.
 	if cfg.QPS == 0 {
 		// Adjust our client's rate limits based on the number of controllers we are running.
-		cfg.QPS = float32(len(ctors)) * rest.DefaultQPS
+		cfg.QPS = 50000
 	}
 	if cfg.Burst == 0 {
-		cfg.Burst = len(ctors) * rest.DefaultBurst
+		cfg.Burst = 100000
 	}
 
 	ctx, startInformers := injection.EnableInjectionOrDie(ctx, cfg)

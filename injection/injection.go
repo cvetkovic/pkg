@@ -50,10 +50,10 @@ func EnableInjectionOrDie(ctx context.Context, cfg *rest.Config) (context.Contex
 
 	// Respect user provided settings, but if omitted customize the default behavior.
 	if cfg.QPS == 0 {
-		cfg.QPS = rest.DefaultQPS
+		cfg.QPS = 50000
 	}
 	if cfg.Burst == 0 {
-		cfg.Burst = rest.DefaultBurst
+		cfg.Burst = 100000
 	}
 	ctx = WithConfig(ctx, cfg)
 

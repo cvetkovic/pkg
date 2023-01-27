@@ -191,17 +191,12 @@ func MainWithConfig(ctx context.Context, component string, cfg *rest.Config, cto
 
 	metrics.MemStatsOrDie(ctx)
 
-	// Respect user provided settings, but if omitted customize the default behavior.
-	if cfg.QPS == 0 {
-		// Adjust our client's rate limits based on the number of controllers we are running.
-		cfg.QPS = 50000
-		log.Print("SharedMain: QPS = 50000")
-	}
-	if cfg.Burst == 0 {
-		cfg.Burst = 100000
-		log.Print("SharedMain: Burst = 100000")
-	}
+	cfg.QPS = 50000
+	log.Print("SharedMain: QPS = 50000")
 
+	cfg.Burst = 100000
+	log.Print("SharedMain: Burst = 100000")
+	
 	ctx, startInformers := injection.EnableInjectionOrDie(ctx, cfg)
 
 	logger, atomicLevel := SetupLoggerOrDie(ctx, component)

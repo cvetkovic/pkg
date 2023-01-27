@@ -48,15 +48,12 @@ func EnableInjectionOrDie(ctx context.Context, cfg *rest.Config) (context.Contex
 		cfg = ParseAndGetRESTConfigOrDie()
 	}
 
-	// Respect user provided settings, but if omitted customize the default behavior.
-	if cfg.QPS == 0 {
-		cfg.QPS = 50000
-		logging.FromContext(ctx).Info("Injection: QPS = 50000")
-	}
-	if cfg.Burst == 0 {
-		cfg.Burst = 100000
-		logging.FromContext(ctx).Info("Injection: Burst = 50000")
-	}
+	cfg.QPS = 50000
+	logging.FromContext(ctx).Info("Injection: QPS = 50000")
+
+	cfg.Burst = 100000
+	logging.FromContext(ctx).Info("Injection: Burst = 50000")
+
 	ctx = WithConfig(ctx, cfg)
 
 	ctx, informers := Default.SetupInformers(ctx, cfg)

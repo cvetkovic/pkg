@@ -60,7 +60,7 @@ var (
 	// may adjust this process-wide default.  For finer control, invoke
 	// Run on the controller directly.
 	// TODO rename the const to Concurrency and deprecated this
-	DefaultThreadsPerController = 10
+	DefaultThreadsPerController = 2
 )
 
 // Reconciler is the interface that controller implementations are expected

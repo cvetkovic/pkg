@@ -82,5 +82,8 @@ func (c *ClientConfig) GetRESTConfig() (*rest.Config, error) {
 	config.QPS = 50000
 	config.Burst = 100000
 
+	fmt.Print("QPS: ", config.QPS)
+	fmt.Print("Burst: ", config.Burst)
+
 	return config, nil
 }
